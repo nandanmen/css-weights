@@ -2,7 +2,7 @@ import type { LoaderFunction, ActionFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData, Form, useActionData, Link } from "@remix-run/react";
 
-import { getHighlighter } from "../../highlight.server";
+import { getHighlighter } from "../../utils.server";
 import { prompts } from "../../prompts";
 
 export let loader: LoaderFunction = async ({ params }) => {
