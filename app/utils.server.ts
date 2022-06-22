@@ -6,16 +6,13 @@ const shiki = require("shiki");
 export const getHighlighter = () => {
   return shiki.getHighlighter({
     theme: JSON.parse(
-      fs.readFileSync(
-        path.join(__dirname, "public/codesandbox-dark.json"),
-        "utf-8"
-      )
+      fs.readFileSync(path.join(__dirname, "/codesandbox-dark.json"), "utf-8")
     ),
   });
 };
 
 export const parseDocs = () => {
   return marked.parse(
-    fs.readFileSync(path.join(__dirname, "public/help.md"), "utf-8")
+    fs.readFileSync(path.join(__dirname, "/help.md"), "utf-8")
   );
 };
