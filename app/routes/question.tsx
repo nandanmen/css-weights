@@ -14,10 +14,18 @@ export default function QuestionPage() {
         <h1 className="text-5xl font-title text-sky-300 text-center">
           What's that weight?
         </h1>
-        <p>
+        <p className="flex gap-1">
           Enter the{" "}
-          <a href="#what-does-weight-have-anything-to-do-with-css">weight</a> of
-          the following CSS selector:
+          <a
+            href="#what-does-weight-have-anything-to-do-with-css"
+            className="flex items-center gap-1 text-sky-300"
+          >
+            weight{" "}
+            <span className="w-5 h-5 bg-sky-500 rounded-md text-sky-100 flex items-center justify-center">
+              ?
+            </span>
+          </a>{" "}
+          of the following CSS selector:
         </p>
         <Outlet />
       </div>
