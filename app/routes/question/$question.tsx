@@ -14,6 +14,7 @@ export let loader: LoaderFunction = async ({ params }) => {
     code: highlighter.codeToHtml(prompts[questionNumber].code, { lang: "css" }),
     hasNext: questionNumber < prompts.length - 1,
     number: Number(params.question),
+    total: prompts.length,
   };
 };
 
@@ -35,7 +36,7 @@ export let action: ActionFunction = async ({ request }) => {
 
 export default function Question() {
   const formRef = React.useRef<HTMLFormElement>(null);
-  const { code, hasPrev, hasNext, number } = useLoaderData();
+  const { code, hasPrev, hasNext, number, total } = useLoaderData();
   const response = useActionData();
 
   React.useEffect(() => {
@@ -44,10 +45,12 @@ export default function Question() {
 
   return (
     <>
-      <div
-        className="p-12 bg-neutral-800 md:rounded-md border-neutral-700 border-2 md:w-10/12 flex items-center justify-center prompt"
-        dangerouslySetInnerHTML={{ __html: code }}
-      />
+      <div className="p-12 bg-neutral-800 md:rounded-md border-neutral-700 border-2 md:w-10/12 flex items-center justify-center prompt relative">
+        <p className="absolute text-sm bottom-full -translate-y-2 right-3 text-neutral-400">
+          {number} / {total}
+        </p>
+        <div dangerouslySetInnerHTML={{ __html: code }} />
+      </div>
       <Form className="w-80 space-y-4" method="post" ref={formRef}>
         <div className="flex gap-3 items-center">
           <Input
@@ -66,7 +69,7 @@ export default function Question() {
             incorrect={response?.answers[2] !== response?.response[2]}
           />
         </div>
-        <div className="flex gap-3 justify-center items-center text-sm font-mono">
+        <div className="flex gap-3 justify-center items-center text-sm font-mono relative">
           <LinkButton to={`/question/${number - 1}`} disabled={!hasPrev}>
             Prev
           </LinkButton>
@@ -76,17 +79,32 @@ export default function Question() {
           <LinkButton to={`/question/${number + 1}`} disabled={!hasNext}>
             Next
           </LinkButton>
+          {response && (
+            <div className="absolute top-full popup">
+              {response.correct ? <CorrectFeedback /> : <IncorrectFeedback />}
+            </div>
+          )}
         </div>
       </Form>
-      {response &&
-        (response.correct ? (
-          <p>You got it 🎉</p>
-        ) : (
-          <p>That's not quite right 😞</p>
-        ))}
     </>
   );
 }
+
+const CorrectFeedback = () => {
+  return (
+    <p className="p-2 bg-green-800 border-2 border-green-600 rounded-md">
+      You got it 🎉
+    </p>
+  );
+};
+
+const IncorrectFeedback = () => {
+  return (
+    <p className="p-2 bg-red-800 border-2 border-red-600 rounded-md">
+      That's not quite right 😞
+    </p>
+  );
+};
 
 const LinkButton = ({
   to,

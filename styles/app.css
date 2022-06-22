@@ -17,3 +17,19 @@ input[type=number] {
 .prompt {
   max-width: 60rem;
 }
+
+.popup {
+  animation: fadein 0.4s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translateY(0px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(24px);
+  }
+}
