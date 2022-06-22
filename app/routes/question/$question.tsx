@@ -30,7 +30,7 @@ export let action: ActionFunction = async ({ request }) => {
   ].map((answer) => Number(answer));
   const isCorrect = answer.every((col, index) => userAnswers[index] === col);
 
-  return json({ correct: isCorrect, answers: userAnswers });
+  return json({ correct: isCorrect, response: userAnswers, answers: answer });
 };
 
 export default function Question() {
@@ -49,10 +49,22 @@ export default function Question() {
         dangerouslySetInnerHTML={{ __html: code }}
       />
       <Form className="w-80 space-y-4" method="post" ref={formRef}>
-        <div className="flex gap-3">
-          <Input label="ID" defaultValue={response?.answers[0] ?? 0} />
-          <Input label="Class" defaultValue={response?.answers[1] ?? 0} />
-          <Input label="Type" defaultValue={response?.answers[2] ?? 0} />
+        <div className="flex gap-3 items-center">
+          <Input
+            label="ID"
+            defaultValue={response?.response[0] ?? 0}
+            incorrect={response?.answers[0] !== response?.response[0]}
+          />
+          <Input
+            label="Class"
+            defaultValue={response?.response[1] ?? 0}
+            incorrect={response?.answers[1] !== response?.response[1]}
+          />
+          <Input
+            label="Type"
+            defaultValue={response?.response[2] ?? 0}
+            incorrect={response?.answers[2] !== response?.response[2]}
+          />
         </div>
         <div className="flex gap-3 justify-center items-center text-sm font-mono">
           <LinkButton to={`/question/${number - 1}`} disabled={!hasPrev}>
@@ -102,9 +114,11 @@ const LinkButton = ({
 const Input = ({
   label,
   defaultValue = 0,
+  incorrect = false,
 }: {
   label: string;
   defaultValue?: number;
+  incorrect?: boolean;
 }) => (
   <div className="font-mono text-center space-y-2">
     <label htmlFor={label} className="block text-neutral-400">
@@ -114,7 +128,9 @@ const Input = ({
       id={label}
       name={label.toLowerCase()}
       type="number"
-      className="w-full text-center bg-neutral-800 rounded-md text-5xl p-4 border-2 border-neutral-700 focus-visible:border-[#cabeff] outline-none"
+      className={`w-full text-center bg-neutral-800 rounded-md text-5xl p-4 focus-visible:border-[#cabeff] outline-none border-2 ${
+        incorrect ? "border-red-500" : "border-neutral-700"
+      }`}
       defaultValue={defaultValue}
     />
   </div>
