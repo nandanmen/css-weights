@@ -3,6 +3,8 @@ import { fetch } from "@remix-run/node";
 import { marked } from "marked";
 const shiki = require("shiki");
 
+const cache = {} as Record<string, unknown>;
+
 const readDir = async (dir: string) => {
   const files = await fs.promises.readdir(dir, { withFileTypes: true });
   files.map(async (file) => {
@@ -24,8 +26,13 @@ export const getHighlighter = async () => {
 };
 
 const getJson = async (path: string) => {
+  if (cache[path]) return cache[path];
+
   const resp = await fetch(`https://css-weights.vercel.app/${path}`);
-  return resp.json();
+  const body = resp.json();
+
+  cache[path] = body;
+  return body;
 };
 
 export const parseDocs = async () => {
