@@ -20,7 +20,7 @@
   "devDependencies": {
     "@remix-run/dev": "^1.4.3",
     "@remix-run/eslint-config": "^1.4.3",
-    "@remix-run/serve": "^1.4.3",
+    "@remix-run/serve": "^1.6.0",
     "@tailwindcss/typography": "^0.5.2",
     "@types/marked": "^4.0.3",
     "@types/react": "^17.0.45",

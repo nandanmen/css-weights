@@ -1247,7 +1247,7 @@
     history "^5.3.0"
     react-router-dom "^6.2.2"
 
-"@remix-run/serve@^1.4.3":
+"@remix-run/serve@^1.6.0":
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/@remix-run/serve/-/serve-1.6.0.tgz#ebf19fb262c5e303b2ace4e18c10f7f8bd2081a3"
   integrity sha512-cO4xLBD73tU0HB7aOSXEKysA6qTCpyGTkXC7A2S99WV9Se/6306GLGkYo3HPEx6wD2x98abK41teFve68JOAaQ==
