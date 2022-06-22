@@ -15,11 +15,17 @@ const readDir = async (dir: string) => {
 };
 
 export const getHighlighter = async () => {
-  const resp = await fetch(
-    "https://css-weights.vercel.app/codesandbox-dark.json"
-  );
-  const theme = await resp.json();
-  return shiki.getHighlighter({ theme });
+  const theme = await getJson("codesandbox-dark.json");
+  const langSource = await getJson("css.tmLanguage.json");
+  return shiki.getHighlighter({
+    theme,
+    langs: [{ id: "css", scopeName: "source.css", grammar: langSource }],
+  });
+};
+
+const getJson = async (path: string) => {
+  const resp = await fetch(`https://css-weights.vercel.app/${path}`);
+  return resp.json();
 };
 
 export const parseDocs = async () => {
