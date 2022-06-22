@@ -9,5 +9,5 @@ export const getHighlighter = () => {
 };
 
 export const parseDocs = () => {
-  return marked.parse(fs.readFileSync("./app/help.md", "utf-8"));
+  return marked.parse(fs.readFileSync("./help.md", "utf-8"));
 };
