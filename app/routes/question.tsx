@@ -9,7 +9,7 @@ export let loader = () => {
 export default function QuestionPage() {
   const docs = useLoaderData();
   return (
-    <main className="bg-neutral-900 text-neutral-200 min-h-screen pb-16">
+    <main className="bg-neutral-900 text-neutral-200 min-h-screen pb-48">
       <div className="flex flex-col items-center justify-center space-y-6 h-screen">
         <h1 className="text-5xl font-title text-sky-300 text-center">
           What's that weight?
@@ -23,7 +23,7 @@ export default function QuestionPage() {
       </div>
       <article
         dangerouslySetInnerHTML={{ __html: docs }}
-        className="prose prose-invert mx-auto prose-headings:font-title -mt-12"
+        className="prose prose-invert mx-auto prose-headings:font-title -mt-12 p-4"
       />
     </main>
   );

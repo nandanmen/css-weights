@@ -1111,6 +1111,10 @@ video {
   padding-bottom: 4rem;
 }
 
+.pb-48 {
+  padding-bottom: 12rem;
+}
+
 .text-center {
   text-align: center;
 }
