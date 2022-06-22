@@ -23,7 +23,7 @@ export default function QuestionPage() {
       </div>
       <article
         dangerouslySetInnerHTML={{ __html: docs }}
-        className="prose prose-invert mx-auto prose-headings:font-title -mt-12 p-4"
+        className="prose prose-invert mx-auto prose-headings:font-title prose-headings:scroll-mt-12 p-4"
       />
     </main>
   );
