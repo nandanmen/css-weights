@@ -9,9 +9,9 @@ export let loader = () => {
 export default function QuestionPage() {
   const docs = useLoaderData();
   return (
-    <main className="bg-neutral-900 text-neutral-200 min-h-screen pb-48">
-      <div className="flex flex-col items-center justify-center space-y-6 h-screen">
-        <h1 className="text-5xl font-title text-sky-300 text-center">
+    <main className="bg-neutral-900 text-neutral-200 py-24 md:py-32 lg:py-48">
+      <div className="flex flex-col items-center justify-center space-y-6 mb-48">
+        <h1 className="text-5xl font-title font-bold text-sky-300 text-center">
           What's that weight?
         </h1>
         <p className="flex gap-1">

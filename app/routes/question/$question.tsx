@@ -45,7 +45,7 @@ export default function Question() {
 
   return (
     <>
-      <div className="p-12 bg-neutral-800 md:rounded-md border-neutral-700 border-2 md:w-10/12 flex items-center justify-center prompt relative">
+      <div className="prompt relative">
         <p className="absolute text-sm bottom-full -translate-y-2 right-3 text-neutral-400">
           {number} / {total}
         </p>

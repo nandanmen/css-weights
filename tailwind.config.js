@@ -5,6 +5,8 @@ module.exports = {
     extend: {
       fontFamily: {
         title: ["Arima Madurai"],
+        sans: ["Nunito"],
+        mono: ["Space Mono"],
       },
     },
   },
