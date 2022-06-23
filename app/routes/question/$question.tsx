@@ -46,7 +46,7 @@ export default function Question() {
   return (
     <>
       <div className="prompt relative">
-        <p className="absolute text-sm bottom-full -translate-y-2 right-3 text-neutral-400">
+        <p className="absolute text-xs top-2 right-3 text-neutral-400">
           {number} / {total}
         </p>
         <div dangerouslySetInnerHTML={{ __html: code }} />
@@ -73,7 +73,7 @@ export default function Question() {
           <LinkButton to={`/question/${number - 1}`} disabled={!hasPrev}>
             Prev
           </LinkButton>
-          <button className="py-1 px-2 rounded-sm border-2 border-neutral-800 focus-visible:border-[#cabeff] outline-none">
+          <button className="py-1 px-2 rounded-md border-2 border-neutral-800 focus-visible:border-[#cabeff] hover:bg-neutral-800 outline-none">
             Submit
           </button>
           <LinkButton to={`/question/${number + 1}`} disabled={!hasNext}>
@@ -115,13 +115,15 @@ const LinkButton = ({
   disabled?: boolean;
   children: React.ReactNode;
 }) => {
+  const disabledClasses = disabled
+    ? "text-neutral-600 pointer-events-none cursor-not-allowed"
+    : "";
   return (
     <Link
       to={to}
       className={
-        disabled
-          ? "text-neutral-600 pointer-events-none cursor-not-allowed"
-          : ""
+        "py-1 px-2 rounded-md border-2 border-neutral-900 hover:bg-neutral-800" +
+        disabledClasses
       }
     >
       {children}
