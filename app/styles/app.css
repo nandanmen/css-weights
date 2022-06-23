@@ -990,8 +990,8 @@ video {
   position: relative;
 }
 
-.bottom-full {
-  bottom: 100%;
+.top-2 {
+  top: 0.5rem;
 }
 
 .right-3 {
@@ -1002,21 +1002,9 @@ video {
   top: 100%;
 }
 
-.top-3 {
-  top: 0.75rem;
-}
-
-.top-2 {
-  top: 0.5rem;
-}
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
-}
-
-.mb-32 {
-  margin-bottom: 8rem;
 }
 
 .mb-48 {
@@ -1057,11 +1045,6 @@ video {
 
 .w-full {
   width: 100%;
-}
-
-.-translate-y-2 {
-  --tw-translate-y: -0.5rem;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .transform {
@@ -1114,10 +1097,6 @@ video {
   border-radius: 0.375rem;
 }
 
-.rounded-sm {
-  border-radius: 0.125rem;
-}
-
 .border {
   border-width: 1px;
 }
@@ -1141,6 +1120,11 @@ video {
   border-color: rgb(220 38 38 / var(--tw-border-opacity));
 }
 
+.border-neutral-900 {
+  --tw-border-opacity: 1;
+  border-color: rgb(23 23 23 / var(--tw-border-opacity));
+}
+
 .border-red-500 {
   --tw-border-opacity: 1;
   border-color: rgb(239 68 68 / var(--tw-border-opacity));
@@ -1149,11 +1133,6 @@ video {
 .border-neutral-700 {
   --tw-border-opacity: 1;
   border-color: rgb(64 64 64 / var(--tw-border-opacity));
-}
-
-.border-neutral-900 {
-  --tw-border-opacity: 1;
-  border-color: rgb(23 23 23 / var(--tw-border-opacity));
 }
 
 .bg-neutral-900 {
@@ -1221,14 +1200,14 @@ video {
   line-height: 1;
 }
 
-.text-sm {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
-
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .font-bold {
@@ -1354,6 +1333,10 @@ input[type=number] {
           animation-fill-mode: forwards;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @-webkit-keyframes fadein {
   from {
     opacity: 0;
@@ -1388,11 +1371,6 @@ input[type=number] {
   html {
     font-size: 20px;
   }
-}
-
-.hover\:bg-neutral-700:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(64 64 64 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-neutral-800:hover {

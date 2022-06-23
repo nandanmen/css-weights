@@ -116,7 +116,7 @@ const LinkButton = ({
   children: React.ReactNode;
 }) => {
   const disabledClasses = disabled
-    ? "text-neutral-600 pointer-events-none cursor-not-allowed"
+    ? " text-neutral-600 pointer-events-none cursor-not-allowed"
     : "";
   return (
     <Link

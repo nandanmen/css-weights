@@ -27,6 +27,10 @@ input[type=number] {
   animation-fill-mode: forwards;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @keyframes fadein {
   from {
     opacity: 0;
