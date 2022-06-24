@@ -1,62 +1,127 @@
-export const prompts = [
+type Prompt = {
+  code: string[];
+  answer: Answer;
+};
+
+export type Answer = {
+  id?: string[];
+  class?: string[];
+  type?: string[];
+  zero?: string[];
+};
+
+export const prompts: Prompt[] = [
   {
-    code: `#myElement`,
-    answer: [1, 0, 0],
+    code: [`#myElement`],
+    answer: {
+      id: ["#myElement"],
+    },
   },
   {
-    code: `[type="password"]`,
-    answer: [0, 1, 0],
+    code: [`[type="password"]`],
+    answer: {
+      class: [`[type="password"]`],
+    },
   },
   {
-    code: `input:focus`,
-    answer: [0, 1, 1],
+    code: ["input", ":focus"],
+    answer: {
+      class: [":focus"],
+      type: ["input"],
+    },
   },
   {
-    code: `.myElement`,
-    answer: [0, 1, 0],
+    code: [`.myElement`],
+    answer: {
+      class: [`.myElement`],
+    },
   },
   {
-    code: `:root #myApp input:required`,
-    answer: [1, 2, 1],
+    code: [`:root`, ` `, `#myApp`, ` `, `input`, `:required`],
+    answer: {
+      id: ["#myApp"],
+      class: [":required", ":root"],
+      type: ["input"],
+    },
   },
   {
-    code: `#fakeId#fakeId#fakeID`,
-    answer: [3, 0, 0],
+    code: ["#myApp", "#myApp", "#myApp"],
+    answer: {
+      id: ["#myApp"],
+    },
   },
   {
-    code: `.bodyClass .sectionClass .parentClass [id="myElement"]`,
-    answer: [0, 4, 0],
+    code: [
+      ".bodyClass",
+      " ",
+      ".sectionClass",
+      " ",
+      ".parentClass",
+      " ",
+      '[id="myElement"]',
+    ],
+    answer: {
+      class: [
+        ".bodyClass",
+        ".sectionClass",
+        ".parentClass",
+        '[id="myElement"]',
+      ],
+    },
   },
   {
-    code: `#myApp [id="myElement"]`,
-    answer: [1, 1, 0],
+    code: ["#myApp", " ", '[id="myElement"]'],
+    answer: {
+      id: ["#myApp"],
+      class: ['[id="myElement"]'],
+    },
   },
   {
-    code: `:root input`,
-    answer: [0, 1, 1],
+    code: [`:root`, ` `, `input`],
+    answer: {
+      class: [":root"],
+      type: ["input"],
+    },
   },
   {
-    code: `html body main input`,
-    answer: [0, 0, 4],
+    code: [`html`, " ", `body`, " ", `main`, " ", `input`],
+    answer: {
+      type: ["html", "body", "main", "input"],
+    },
   },
   {
-    code: `div:not(.inner) p`,
-    answer: [0, 1, 2],
+    code: [`div`, `:not(.inner)`, " ", `p`],
+    answer: {
+      class: [":not(.inner)"],
+      type: ["div", "p"],
+    },
   },
   {
-    code: `:is(p, #fakeId)`,
-    answer: [1, 0, 0],
+    code: [":is(", "p", ", ", "#fakeId", ")"],
+    answer: {
+      id: ["#fakeId"],
+      zero: ["p"],
+    },
   },
   {
-    code: `div:not(.inner, #fakeId) p`,
-    answer: [1, 0, 2],
+    code: ["div", ":not(", ".inner", ", ", "#fakeId", ")", " p"],
+    answer: {
+      id: ["#fakeId"],
+      type: ["div", "p"],
+      zero: [".inner"],
+    },
   },
   {
-    code: `:where(#defaultTheme) a`,
-    answer: [0, 0, 1],
+    code: [`:where(#defaultTheme)`, " ", "a"],
+    answer: {
+      type: ["a"],
+      zero: [":where(#defaultTheme)"],
+    },
   },
   {
-    code: `:is(p)`,
-    answer: [0, 0, 1],
+    code: [":is(", "p", ")"],
+    answer: {
+      type: ["p"],
+    },
   },
 ];

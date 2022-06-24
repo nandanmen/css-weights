@@ -1002,6 +1002,14 @@ video {
   top: 100%;
 }
 
+.left-0 {
+  left: 0px;
+}
+
+.bottom-full {
+  bottom: 100%;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -1093,6 +1101,10 @@ video {
   margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
 }
 
+.overflow-auto {
+  overflow: auto;
+}
+
 .rounded-md {
   border-radius: 0.375rem;
 }
@@ -1166,6 +1178,10 @@ video {
 
 .p-2 {
   padding: 0.5rem;
+}
+
+.p-12 {
+  padding: 3rem;
 }
 
 .py-24 {
@@ -1289,6 +1305,14 @@ video {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
+.transition {
+  transition-property: color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 /* Chrome, Safari, Edge, Opera */
 
 input::-webkit-outer-spin-button,
@@ -1305,25 +1329,6 @@ input[type=number] {
 
 .prompt {
   width: min(60rem, 100vw);
-}
-
-.prompt .shiki {
-  overflow: auto;
-  border-width: 2px;
-  --tw-border-opacity: 1;
-  border-color: rgb(64 64 64 / var(--tw-border-opacity));
-  --tw-bg-opacity: 1;
-  background-color: rgb(38 38 38 / var(--tw-bg-opacity));
-  padding: 3rem;
-}
-
-@media (min-width: 768px) {
-  .prompt .shiki {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.375rem;
-  }
 }
 
 .popup {
@@ -1392,6 +1397,22 @@ html {
 }
 
 @media (min-width: 768px) {
+  .md\:flex {
+    display: flex;
+  }
+
+  .md\:items-center {
+    align-items: center;
+  }
+
+  .md\:justify-center {
+    justify-content: center;
+  }
+
+  .md\:rounded-md {
+    border-radius: 0.375rem;
+  }
+
   .md\:py-32 {
     padding-top: 8rem;
     padding-bottom: 8rem;
