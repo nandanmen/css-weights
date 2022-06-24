@@ -1,6 +1,8 @@
 # What does weight have anything to do with CSS?
 
-Every CSS selector gets assigned a **weight** so that the browser knows which one it should use when they end up conflicting. If we have an `input` and the following two selectors:
+Every CSS selector is assigned a **weight** that the browser uses to resolve conflicts. **This is how specificity works in a nutshell**.
+
+For example, if we have an `<input>` element and the following two selectors:
 
 ```css
 :root #myApp input:required {
@@ -12,46 +14,56 @@ body main input {
 }
 ```
 
-Then our input will be blue because the first selector has more "weight" than the second one.
+The input will end up being blue because the first selector has more "weight" than the second one.
 
 ## How are selectors weighted?
 
-A selector’s weight consists of three numbers and looks like this:
+A selector is typically can be made up of "smaller" selectors. For example, the first selector in the example above is made up of **4 selectors**:
 
-```css
-1 - 2 - 1
 ```
-
-Each number represents the number of selectors that fall in that specific **weight category**. Since there are three numbers, there are three weight categories in total:
-
-**ID**, which exclusively includes ID selectors (e.g. `#myId`).
-
-**Class**, which includes (you guessed it) class selectors, attribute selectors, and pseudo-classes, such as all the following:
-
-```css
-.myClass
-[type='radio']
-:hover
+:root
+#myApp
+input
 :required
 ```
 
-**Type**, which includes “everything else” — type (or tag) selectors and pseudo-elements (everything that starts with `::`), such as:
+To get a selector's weight, we group up these "fundamental" selectors into three buckets depending on their type:
+
+- `#myId` falls into the **ID bucket**;
+- `:root` and `:required` falls into the **Class bucket**;
+- `input` falls into the **Type bucket**;
+
+The selector's weight is then the total number of selectors in each bucket, written as three numbers:
 
 ```css
-a
-input
-::before
+1-2-1
+
+1-  2-     1
+ID  Class  Type
 ```
 
-Take the following selector for example:
+## What's in each bucket?
+
+Speaking more generally, the **ID bucket** only contains **ID selectors**, and nothing else.
+
+The **Class bucket** contains not only **class selectors**, but also **attribute selectors** like `[role='option']` and **pseudo-classes** like `:required`.
+
+The **Type bucket** contains everything else — **tag selectors** like `input` and `main`, and **pseudo-elements** like `::before` and `::selected`.
+
+## Comparing weights
+
+Selector weights are compared **per bucket, from left to right**. Going back to our initial example:
 
 ```css
-#app input:required {
+/* 1-2-1 */
+:root #myApp input:required {
+  background: blue;
+}
+
+/* 0-0-3 */
+body main input {
+  background: red;
 }
 ```
 
-This selector has a weight of `1-1-1`, because:
-
-- `#app` gives 1 point to the ID bucket;
-- `:required` gives 1 point to the Class bucket;
-- `input` gives 1 point to the Type bucket;
+The first selector wins because the second selector doesn't have any selectors in its ID or Class buckets. This shows that not all buckets are made equal — **the ID bucket is more important than the Class bucket, and the Class bucket is more important than the Type bucket**.
