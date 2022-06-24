@@ -72,20 +72,22 @@ export default function Question() {
           <Input
             label="ID"
             defaultValue={response?.response[0] ?? 0}
-            incorrect={response?.answer.id?.length !== response?.response.id}
+            incorrect={
+              response?.answer.id?.length ?? 0 !== response?.response.id
+            }
           />
           <Input
             label="Class"
             defaultValue={response?.response[1] ?? 0}
             incorrect={
-              response?.answer.class?.length !== response?.response.class
+              response?.answer.class?.length ?? 0 !== response?.response.class
             }
           />
           <Input
             label="Type"
             defaultValue={response?.response[2] ?? 0}
             incorrect={
-              response?.answer.type?.length !== response?.response.type
+              response?.answer.type?.length ?? 0 !== response?.response.type
             }
           />
         </div>
