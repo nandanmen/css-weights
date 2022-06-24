@@ -34,7 +34,7 @@ export let action: ActionFunction = async ({ request }) => {
     type: Number(response.get("type")) ?? 0,
   } as Record<keyof Answer, number>;
 
-  const isCorrect = Object.keys(userAnswers).every(
+  const isCorrect = Object.keys(answer).every(
     (key) =>
       answer[key as keyof Answer]?.length === userAnswers[key as keyof Answer]
   );

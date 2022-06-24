@@ -50,6 +50,12 @@ The **Class bucket** contains not only **class selectors**, but also **attribute
 
 The **Type bucket** contains everything else — **tag selectors** like `input` and `main`, and **pseudo-elements** like `::before` and `::selected`.
 
+## The `:not`, `:is`, and `:where` exceptions
+
+`:not`, `:is`, and `:where` are technically "pseudo-classes" but they are handled differently in the specificity algorithm because they take in selectors as argument.
+
+On their own, `:not` and `:is` **do not carry a weight**. Instead, they take the **weight of the selector in their argument list**.
+
 ## Comparing weights
 
 Selector weights are compared **per bucket, from left to right**. Going back to our initial example:
