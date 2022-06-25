@@ -46,10 +46,24 @@ export let action: ActionFunction = async ({ request }) => {
   });
 };
 
+type AnswerResponse = {
+  correct: boolean;
+  response: Record<keyof Answer, number>;
+  answer: Answer;
+};
+
+const isCorrect = (category: keyof Answer, response?: AnswerResponse) => {
+  if (!response) return true;
+  const answer = response.answer[category];
+  const userAnswers = response.response[category];
+  if (!answer) return true;
+  return answer.length === userAnswers;
+};
+
 export default function Question() {
   const formRef = React.useRef<HTMLFormElement>(null);
   const { code, hasPrev, hasNext, number, total, prompt } = useLoaderData();
-  const response = useActionData();
+  const response = useActionData<AnswerResponse>();
 
   React.useEffect(() => {
     formRef.current?.reset();
@@ -71,24 +85,18 @@ export default function Question() {
         <div className="flex gap-3 items-center">
           <Input
             label="ID"
-            defaultValue={response?.response[0] ?? 0}
-            incorrect={
-              response?.answer.id?.length ?? 0 !== response?.response.id
-            }
+            defaultValue={response?.response.id}
+            correct={isCorrect("id", response)}
           />
           <Input
             label="Class"
-            defaultValue={response?.response[1] ?? 0}
-            incorrect={
-              response?.answer.class?.length ?? 0 !== response?.response.class
-            }
+            defaultValue={response?.response.class}
+            correct={isCorrect("class", response)}
           />
           <Input
             label="Type"
-            defaultValue={response?.response[2] ?? 0}
-            incorrect={
-              response?.answer.type?.length ?? 0 !== response?.response.type
-            }
+            defaultValue={response?.response.type}
+            correct={isCorrect("type", response)}
           />
         </div>
         <div className="flex gap-3 justify-center items-center text-sm font-mono relative">
@@ -214,12 +222,12 @@ const LinkButton = ({
 
 const Input = ({
   label,
-  defaultValue = 0,
-  incorrect = false,
+  correct,
+  defaultValue,
 }: {
   label: string;
+  correct: boolean;
   defaultValue?: number;
-  incorrect?: boolean;
 }) => (
   <div className="font-mono text-center space-y-2">
     <label htmlFor={label} className="block text-neutral-400">
@@ -229,10 +237,11 @@ const Input = ({
       id={label}
       name={label.toLowerCase()}
       type="number"
-      className={`w-full text-center bg-neutral-800 rounded-md text-5xl p-4 focus-visible:border-[#cabeff] outline-none border-2 ${
-        incorrect ? "border-red-500" : "border-neutral-700"
+      className={`w-full text-center bg-neutral-800 rounded-md text-5xl p-4 focus-visible:border-[#cabeff] outline-none border-2 placeholder:text-neutral-600 ${
+        correct ? "border-neutral-700" : "border-red-500"
       }`}
       defaultValue={defaultValue}
+      placeholder="0"
     />
   </div>
 );
