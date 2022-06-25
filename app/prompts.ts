@@ -47,7 +47,7 @@ export const prompts: Prompt[] = [
   {
     code: ["#myApp", "#myApp", "#myApp"],
     answer: {
-      id: ["#myApp"],
+      id: ["#myApp", "#myApp", "#myApp"],
     },
   },
   {
