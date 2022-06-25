@@ -42,6 +42,24 @@ The selector's weight is then the total number of selectors in each bucket, writ
 ID  Class  Type
 ```
 
+## Comparing weights
+
+Selector weights are compared **per bucket, from left to right**. Going back to our initial example:
+
+```css
+/* 1-2-1 */
+:root #myApp input:required {
+  background: blue;
+}
+
+/* 0-0-3 */
+body main input {
+  background: red;
+}
+```
+
+The first selector wins because the second selector doesn't have any selectors in its ID or Class buckets. This shows that not all buckets are made equal — **the ID bucket is more important than the Class bucket, and the Class bucket is more important than the Type bucket**.
+
 ## What's in each bucket?
 
 Speaking more generally, the **ID bucket** only contains **ID selectors**, and nothing else.
@@ -73,21 +91,3 @@ Here, the weight of the selector is `1-0-0` because the ID is heavier than the c
 ```css
 :not(#myId, .class)
 ```
-
-## Comparing weights
-
-Selector weights are compared **per bucket, from left to right**. Going back to our initial example:
-
-```css
-/* 1-2-1 */
-:root #myApp input:required {
-  background: blue;
-}
-
-/* 0-0-3 */
-body main input {
-  background: red;
-}
-```
-
-The first selector wins because the second selector doesn't have any selectors in its ID or Class buckets. This shows that not all buckets are made equal — **the ID bucket is more important than the Class bucket, and the Class bucket is more important than the Type bucket**.
