@@ -25,8 +25,8 @@ export let loader: LoaderFunction = async ({ params }) => {
 export let action: ActionFunction = async ({ request }) => {
   const [, number] = request.url.split("question/");
   const questionNumber = Number(number);
-
   const { answer } = prompts[questionNumber - 1];
+
   const response = await request.formData();
   const userAnswers = {
     id: Number(response.get("id")) ?? 0,
@@ -34,30 +34,37 @@ export let action: ActionFunction = async ({ request }) => {
     type: Number(response.get("type")) ?? 0,
   } as Record<keyof Answer, number>;
 
-  const isCorrect = Object.keys(answer).every(
-    (key) =>
-      answer[key as keyof Answer]?.length === userAnswers[key as keyof Answer]
-  );
-
-  return json({
-    correct: isCorrect,
-    response: userAnswers,
+  return json<AnswerResponse>({
+    results: {
+      id: isCorrect("id", userAnswers, answer),
+      class: isCorrect("class", userAnswers, answer),
+      type: isCorrect("type", userAnswers, answer),
+    },
+    userAnswers,
     answer,
   });
 };
 
+type AnswerKeysWithoutZero = keyof Omit<Answer, "zero">;
+
 type AnswerResponse = {
-  correct: boolean;
-  response: Record<keyof Answer, number>;
+  results: Record<AnswerKeysWithoutZero, boolean>;
+  userAnswers: Record<AnswerKeysWithoutZero, number>;
   answer: Answer;
 };
 
-const isCorrect = (category: keyof Answer, response?: AnswerResponse) => {
-  if (!response) return true;
-  const answer = response.answer[category];
-  const userAnswers = response.response[category];
-  if (!answer) return true;
-  return answer.length === userAnswers;
+const isCorrect = (
+  category: keyof Answer,
+  userAnswers?: Record<keyof Answer, number>,
+  answer?: Answer
+) => {
+  if (!answer || !userAnswers) return true;
+  if (category === "zero") return true;
+
+  const userAnswer = userAnswers[category];
+
+  if (!answer[category]) return userAnswer === 0;
+  return answer[category]?.length === userAnswer;
 };
 
 export default function Question() {
@@ -69,34 +76,32 @@ export default function Question() {
     formRef.current?.reset();
   }, [number]);
 
+  const allCorrect = response && Object.values(response.results).every(Boolean);
+
   return (
     <>
       <div className="prompt relative">
         <p className="absolute text-xs top-2 right-3 text-neutral-400">
           {number} / {total}
         </p>
-        <Prompt
-          prompt={prompt}
-          tokens={code}
-          answer={response && response.answer}
-        />
+        <Prompt prompt={prompt} tokens={code} answer={response?.answer} />
       </div>
       <Form className="w-80 space-y-4" method="post" ref={formRef}>
         <div className="flex gap-3 items-center">
           <Input
             label="ID"
-            defaultValue={response?.response.id}
-            correct={isCorrect("id", response)}
+            defaultValue={response?.userAnswers.id}
+            correct={response?.results.id}
           />
           <Input
             label="Class"
-            defaultValue={response?.response.class}
-            correct={isCorrect("class", response)}
+            defaultValue={response?.userAnswers.class}
+            correct={response?.results.class}
           />
           <Input
             label="Type"
-            defaultValue={response?.response.type}
-            correct={isCorrect("type", response)}
+            defaultValue={response?.userAnswers.type}
+            correct={response?.results.type}
           />
         </div>
         <div className="flex gap-3 justify-center items-center text-sm font-mono relative">
@@ -111,7 +116,7 @@ export default function Question() {
           </LinkButton>
           {response && (
             <div className="absolute top-full popup">
-              {response.correct ? <CorrectFeedback /> : <IncorrectFeedback />}
+              {allCorrect ? <CorrectFeedback /> : <IncorrectFeedback />}
             </div>
           )}
         </div>
@@ -222,11 +227,11 @@ const LinkButton = ({
 
 const Input = ({
   label,
-  correct,
+  correct = true,
   defaultValue,
 }: {
   label: string;
-  correct: boolean;
+  correct?: boolean;
   defaultValue?: number;
 }) => (
   <div className="font-mono text-center space-y-2">
