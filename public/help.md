@@ -52,9 +52,27 @@ The **Type bucket** contains everything else — **tag selectors** like `input` 
 
 ## The `:not`, `:is`, and `:where` exceptions
 
-`:not`, `:is`, and `:where` are technically "pseudo-classes" but they are handled differently in the specificity algorithm because they take in selectors as argument.
+Despite being pseudo-classes, `:not`, `:is`, and `:where` are _not_ part of the Class bucket. Instead, `:where` **doesn't have a weight at all**, and `:not` and `:is` have a weight equivalent to its **argument list**.
 
-On their own, `:not` and `:is` **do not carry a weight**. Instead, they take the **weight of the selector in their argument list**.
+For example, the following selector will have a weight of `0-0-0` even though there's an ID in it:
+
+```css
+:where(#myId)
+```
+
+While the following selector has a weight of `1-0-0` because there's an ID passed to `:not`:
+
+```css
+:not(#myId)
+```
+
+If there are multiple selectors passed to `:not` or `:is`, the weight is the weight of the **heaviest** selector.
+
+Here, the weight of the selector is `1-0-0` because the ID is heavier than the class:
+
+```css
+:not(#myId, .class)
+```
 
 ## Comparing weights
 
