@@ -1027,10 +1027,6 @@ video {
   margin-bottom: 12rem;
 }
 
-.mb-12 {
-  margin-bottom: 3rem;
-}
-
 .mt-12 {
   margin-top: 3rem;
 }
@@ -1075,12 +1071,12 @@ video {
   width: 100%;
 }
 
-.w-6 {
-  width: 1.5rem;
-}
-
 .w-screen {
   width: 100vw;
+}
+
+.w-6 {
+  width: 1.5rem;
 }
 
 .transform {
@@ -1203,16 +1199,6 @@ video {
   background-color: rgb(153 27 27 / var(--tw-bg-opacity));
 }
 
-.bg-\[\#CABEFF\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(202 190 255 / var(--tw-bg-opacity));
-}
-
-.bg-neutral-700 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(64 64 64 / var(--tw-bg-opacity));
-}
-
 .p-4 {
   padding: 1rem;
 }
@@ -1223,10 +1209,6 @@ video {
 
 .p-2 {
   padding: 0.5rem;
-}
-
-.p-1 {
-  padding: 0.25rem;
 }
 
 .py-24 {
@@ -1252,10 +1234,6 @@ video {
 .py-16 {
   padding-top: 4rem;
   padding-bottom: 4rem;
-}
-
-.pt-16 {
-  padding-top: 4rem;
 }
 
 .pb-24 {
@@ -1331,11 +1309,6 @@ video {
 .text-neutral-600 {
   --tw-text-opacity: 1;
   color: rgb(82 82 82 / var(--tw-text-opacity));
-}
-
-.text-neutral-800 {
-  --tw-text-opacity: 1;
-  color: rgb(38 38 38 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -1443,6 +1416,16 @@ html {
   }
 }
 
+.placeholder\:text-neutral-400::-moz-placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(163 163 163 / var(--tw-text-opacity));
+}
+
+.placeholder\:text-neutral-400::placeholder {
+  --tw-text-opacity: 1;
+  color: rgb(163 163 163 / var(--tw-text-opacity));
+}
+
 .placeholder\:text-neutral-600::-moz-placeholder {
   --tw-text-opacity: 1;
   color: rgb(82 82 82 / var(--tw-text-opacity));
@@ -1461,16 +1444,6 @@ html {
 .hover\:bg-neutral-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(64 64 64 / var(--tw-bg-opacity));
-}
-
-.hover\:text-yellow-400:hover {
-  --tw-text-opacity: 1;
-  color: rgb(250 204 21 / var(--tw-text-opacity));
-}
-
-.hover\:text-yellow-200:hover {
-  --tw-text-opacity: 1;
-  color: rgb(254 240 138 / var(--tw-text-opacity));
 }
 
 .hover\:text-\[\#CABEFF\]:hover {
@@ -1538,5 +1511,9 @@ html {
 
   .lg\:pt-48 {
     padding-top: 12rem;
+  }
+
+  .lg\:pt-40 {
+    padding-top: 10rem;
   }
 }

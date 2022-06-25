@@ -18,6 +18,7 @@ export default function QuestionPage() {
               className="hover:text-[#CABEFF]"
               target="_blank"
               href="https://twitter.com/nandafyi"
+              rel="noreferrer"
             >
               @nandafyi
             </a>
@@ -27,6 +28,7 @@ export default function QuestionPage() {
               className="hover:text-[#CABEFF]"
               target="_blank"
               href="https://github.com/narendrasss/css-weights"
+              rel="noreferrer"
             >
               <svg width="24" height="24" fill="currentColor">
                 <path
@@ -39,7 +41,7 @@ export default function QuestionPage() {
           </li>
         </ul>
       </header>
-      <div className="flex flex-col items-center justify-center space-y-6 mb-48 pt-24 md:pt-32 lg:pt-48 lg:mb-56">
+      <div className="flex flex-col items-center justify-center space-y-6 mb-48 pt-24 md:pt-32 lg:pt-40 lg:mb-56">
         <h1 className="text-5xl font-title font-bold text-center">
           What's that weight?
         </h1>

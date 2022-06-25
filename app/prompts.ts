@@ -12,12 +12,6 @@ export type Answer = {
 
 export const prompts: Prompt[] = [
   {
-    code: [`#myElement`],
-    answer: {
-      id: ["#myElement"],
-    },
-  },
-  {
     code: [`[type="password"]`],
     answer: {
       class: [`[type="password"]`],
