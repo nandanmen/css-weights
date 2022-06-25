@@ -7,27 +7,41 @@ import { motion } from "framer-motion";
 import { getHighlighter } from "../../utils.server";
 import { prompts, type Answer } from "../../prompts";
 
-export let loader: LoaderFunction = async ({ params }) => {
+export let loader: LoaderFunction = async ({ params, request }) => {
   const highlighter = await getHighlighter();
   const questionNumber = Number(params.question) - 1;
-  return {
+  if (questionNumber >= prompts.length) {
+    return new Response("Not Found", { status: 404 });
+  }
+
+  const { answer, code } = prompts[questionNumber];
+
+  const body = {
     hasPrev: questionNumber > 0,
-    code: prompts[questionNumber]?.code.map(
-      (code) => highlighter.codeToThemedTokens(code, "css")[0]
-    ),
-    prompt: prompts[questionNumber]?.code,
+    code: code.map((code) => highlighter.codeToThemedTokens(code, "css")[0]),
+    prompt: code,
     hasNext: questionNumber < prompts.length - 1,
     number: Number(params.question),
     total: prompts.length,
   };
+
+  const { searchParams } = new URL(request.url);
+  if (searchParams.has("answer")) {
+    return {
+      ...body,
+      answer,
+    };
+  }
+
+  return body;
 };
 
 export let action: ActionFunction = async ({ request }) => {
   const [, number] = request.url.split("question/");
   const questionNumber = Number(number);
-  const { answer } = prompts[questionNumber - 1];
-
   const response = await request.formData();
+
+  const { answer } = prompts[questionNumber - 1];
   const userAnswers = {
     id: Number(response.get("id")) ?? 0,
     class: Number(response.get("class")) ?? 0,
@@ -69,7 +83,8 @@ const isCorrect = (
 
 export default function Question() {
   const formRef = React.useRef<HTMLFormElement>(null);
-  const { code, hasPrev, hasNext, number, total, prompt } = useLoaderData();
+  const { code, hasPrev, hasNext, number, total, prompt, answer } =
+    useLoaderData();
   const response = useActionData<AnswerResponse>();
 
   React.useEffect(() => {
@@ -78,29 +93,48 @@ export default function Question() {
 
   const allCorrect = response && Object.values(response.results).every(Boolean);
 
+  const getDefaultValue = (key: AnswerKeysWithoutZero) => {
+    if (!response && !answer) return;
+    if (answer) {
+      return answer[key]?.length ?? 0;
+    }
+    return response?.userAnswers.id;
+  };
+
+  const getAnswer = () => {
+    if (answer) return answer;
+    if (allCorrect) return response?.answer;
+  };
+
   return (
     <>
       <div className="prompt relative">
         <p className="absolute text-xs top-2 right-3 text-neutral-400">
           {number} / {total}
         </p>
-        <Prompt prompt={prompt} tokens={code} answer={response?.answer} />
+        <Prompt prompt={prompt} tokens={code} answer={getAnswer()} />
+        <Link
+          to="?answer=true"
+          className="absolute bottom-2 left-3 text-neutral-400 text-xs hover:text-[#CABEFF]"
+        >
+          Show answer
+        </Link>
       </div>
       <Form className="w-80 space-y-4" method="post" ref={formRef}>
         <div className="flex gap-3 items-center">
           <Input
             label="ID"
-            defaultValue={response?.userAnswers.id}
+            defaultValue={getDefaultValue("id")}
             correct={response?.results.id}
           />
           <Input
             label="Class"
-            defaultValue={response?.userAnswers.class}
+            defaultValue={getDefaultValue("class")}
             correct={response?.results.class}
           />
           <Input
             label="Type"
-            defaultValue={response?.userAnswers.type}
+            defaultValue={getDefaultValue("type")}
             correct={response?.results.type}
           />
         </div>
@@ -141,7 +175,7 @@ const Prompt = ({
   answer?: Answer;
 }) => {
   return (
-    <pre className="p-12 bg-neutral-800 md:rounded-md border-neutral-700 border-2 overflow-auto md:flex md:items-center md:justify-center">
+    <pre className="px-12 py-16 bg-neutral-800 md:rounded-md border-neutral-700 border-2 overflow-auto md:flex md:items-center md:justify-center">
       {tokens.map((line, index) => {
         const text = prompt[index];
         const hasMargin = answer && prompt[index + 1] !== " ";
