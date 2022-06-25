@@ -98,7 +98,7 @@ export default function Question() {
     if (answer) {
       return answer[key]?.length ?? 0;
     }
-    return response?.userAnswers.id;
+    return response?.userAnswers[key];
   };
 
   const getAnswer = () => {
